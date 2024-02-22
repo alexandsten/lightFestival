@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, Text, StyleSheet } from 'react-native';
+import { View, TextInput, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 
 export default function LightMap() {
@@ -34,6 +34,10 @@ export default function LightMap() {
     setSelectedMarker(marker);
   };
 
+  const handleCloseButtonPress = () => {
+    setSelectedMarker(null);
+  };
+
   return (
     <View style={styles.container}>
       <MapView
@@ -56,13 +60,7 @@ export default function LightMap() {
           />
         ))}
       </MapView>
-      {selectedMarker && (
-        <View style={styles.selectedMarkerContainer}>
-          <Text style={styles.selectedMarkerText}>
-            {`Selected Marker: ${selectedMarker.title}`}
-          </Text>
-        </View>
-      )}
+      {!selectedMarker && (
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.textInput}
@@ -70,6 +68,17 @@ export default function LightMap() {
           // Add any additional props or event handlers as needed
         />
       </View>
+      )}
+      {selectedMarker && (
+        <View style={styles.selectedMarkerContainer}>
+          <Text style={styles.selectedMarkerText}>
+            {`Selected Marker: ${selectedMarker.title}`}
+          </Text>
+          <TouchableOpacity onPress={handleCloseButtonPress} style={styles.closeButton}>
+            <Text style={styles.closeButtonText}>Close</Text>
+          </TouchableOpacity>
+        </View>
+      )}
     </View>
   );
 }
@@ -102,14 +111,27 @@ const styles = StyleSheet.create({
   },
   selectedMarkerContainer: {
     position: 'absolute',
-    bottom: 80,
+    bottom: 20,
     left: 20,
     right: 20,
     backgroundColor: 'rgba(28, 27, 31, 0.8)',
     borderRadius: 15,
-    padding: 10,
+    padding: 15, // Increase the padding for more height
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingVertical: 80,
   },
   selectedMarkerText: {
+    color: 'white',
+    flex: 1, // Allow text to take available space
+  },
+  closeButton: {
+    padding: 10,
+    backgroundColor: 'rgba(255, 255, 255, 0.3)',
+    borderRadius: 8,
+  },
+  closeButtonText: {
     color: 'white',
   },
 });
