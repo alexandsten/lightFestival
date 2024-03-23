@@ -1,9 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect  } from 'react';
 import { View, TextInput, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
+import { Animated } from 'react-native';
 
 export default function LightMap() {
   const [selectedMarker, setSelectedMarker] = useState(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const translateY = useRef(new Animated.Value(300)).current;
+
+  const toggleVisibility = () => {
+    setIsVisible(!isVisible);
+  };
+
+  useEffect(() => {
+    if (isVisible) {
+      Animated.timing(
+        translateY,
+        {
+          toValue: 20, // Final position where you want it to appear from the bottom
+          duration: 500, // Duration of the animation in milliseconds
+          useNativeDriver: true // This improves animation performance
+        }
+      ).start();
+    } else {
+      Animated.timing(
+        translateY,
+        {
+          toValue: 300, // Return to initial position below the screen
+          duration: 500, // Duration of the animation in milliseconds
+          useNativeDriver: true // This improves animation performance
+        }
+      ).start();
+    }
+  }, [isVisible]);
 
   const markers = [
     {
@@ -32,10 +61,12 @@ export default function LightMap() {
 
   const handleMarkerPress = (marker) => {
     setSelectedMarker(marker);
+    toggleVisibility()
   };
 
   const handleCloseButtonPress = () => {
     setSelectedMarker(null);
+    toggleVisibility()
   };
 
   return (
@@ -70,14 +101,18 @@ export default function LightMap() {
       </View>
       )}
       {selectedMarker && (
-        <View style={styles.selectedMarkerContainer}>
+        <Animated.View style={[
+            styles.selectedMarkerContainer,
+            { transform: [{ translateY }] }
+          ]}
+        >
           <Text style={styles.selectedMarkerText}>
             {`Selected Marker: ${selectedMarker.title}`}
           </Text>
           <TouchableOpacity onPress={handleCloseButtonPress} style={styles.closeButton}>
             <Text style={styles.closeButtonText}>Close</Text>
           </TouchableOpacity>
-        </View>
+        </Animated.View>
       )}
     </View>
   );
