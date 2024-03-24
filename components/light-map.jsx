@@ -112,13 +112,16 @@ export default function LightMap() {
           { transform: [{ translateY }] }
         ]}>
           <View style={styles.columnContainer}>
-            <Text style={styles.selectedMarkerTitle}>
-              {`Selected Marker: ${selectedMarker.title}`}
-            </Text>
-            <Text style={styles.selectedMarkerText}>
-              {`Description: ${selectedMarker.description}`}
-            </Text>
-            
+            <View style={styles.titleContainer}>
+              <Text style={styles.selectedMarkerTitle}>
+                {`Selected Marker: ${selectedMarker.title}`}
+              </Text>
+            </View>
+            <View style={styles.descriptionContainer}>
+              <Text style={styles.selectedMarkerText}>
+                {`Description: ${selectedMarker.description}`}
+              </Text>
+            </View>
           </View>
          
           <TouchableOpacity onPress={handleCloseButtonPress} style={styles.readMoreButton}>
@@ -208,4 +211,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  descriptionContainer: {
+    backgroundColor: '#383838', // Background color for the description
+    padding: 10, // Add padding for some spacing
+  },
+  titleContainer: {
+    height: 50, // Fixed height for the title
+    backgroundColor: '#29234a', // Unique background color for the title
+    justifyContent: 'center', // Align text vertically in the center
+    paddingHorizontal: 10, // Add padding horizontally for some spacing
+  },
+
 });
