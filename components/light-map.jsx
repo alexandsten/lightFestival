@@ -37,6 +37,8 @@ export default function LightMap() {
   const markers = [
     {
       title: 'Marker 1',
+      picture: 'url',
+      description: 'Marker 1 description: detta är en beskrivning',
       coordinate: {
         latitude: 37.78825,
         longitude: -122.4324,
@@ -44,6 +46,8 @@ export default function LightMap() {
     },
     {
         title: 'Marker 2',
+        picture: 'url',
+        description: 'Marker 2 description: detta är en beskrivning',
         coordinate: {
           latitude: 37.75885,
           longitude: -122.4384,
@@ -51,6 +55,8 @@ export default function LightMap() {
       },
       {
         title: 'Marker 3',
+        picture: 'url',
+        description: 'Marker 3 description: detta är en beskrivning',
         coordinate: {
           latitude: 37.78245,
           longitude: -122.4344,
@@ -102,17 +108,29 @@ export default function LightMap() {
       )}
       {selectedMarker && (
         <Animated.View style={[
-            styles.selectedMarkerContainer,
-            { transform: [{ translateY }] }
-          ]}
-        >
-          <Text style={styles.selectedMarkerText}>
-            {`Selected Marker: ${selectedMarker.title}`}
-          </Text>
-          <TouchableOpacity onPress={handleCloseButtonPress} style={styles.closeButton}>
+          styles.selectedMarkerContainer,
+          { transform: [{ translateY }] }
+        ]}>
+          <View style={styles.columnContainer}>
+            <Text style={styles.selectedMarkerTitle}>
+              {`Selected Marker: ${selectedMarker.title}`}
+            </Text>
+            <Text style={styles.selectedMarkerText}>
+              {`Description: ${selectedMarker.description}`}
+            </Text>
+            
+          </View>
+         
+          <TouchableOpacity onPress={handleCloseButtonPress} style={styles.readMoreButton}>
+            <Text style={styles.closeButtonText}>Read More</Text>
+          </TouchableOpacity>
+            <TouchableOpacity onPress={handleCloseButtonPress} style={styles.closeButton}>
             <Text style={styles.closeButtonText}>Close</Text>
           </TouchableOpacity>
+         
+          
         </Animated.View>
+        
       )}
     </View>
   );
@@ -157,16 +175,37 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingVertical: 80,
   },
+  selectedMarkerTitle: {
+    color: 'white',
+    flex: 1, // Allow text to take available space
+    fontSize: 22
+  },
   selectedMarkerText: {
     color: 'white',
     flex: 1, // Allow text to take available space
   },
   closeButton: {
+    position: 'absolute',
+    bottom: 5,
+    right: 15, // Optionally set it to the right if needed
     padding: 10,
     backgroundColor: 'rgba(255, 255, 255, 0.3)',
     borderRadius: 8,
-  },
+  },  
+  readMoreButton: {
+    position: 'absolute',
+    bottom: 5,
+    right: 205, // Optionally set it to the right if needed
+    padding: 10,
+    backgroundColor: 'rgba(255, 255, 255, 0.3)',
+    borderRadius: 8,
+  },  
   closeButtonText: {
     color: 'white',
+  },
+  columnContainer: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
