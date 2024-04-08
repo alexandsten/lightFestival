@@ -51,7 +51,7 @@ export default function LightMap() {
         translateY,
         {
           toValue: 20, // Final position where you want it to appear from the bottom
-          duration: 500, // Duration of the animation in milliseconds
+          duration: 250, // Duration of the animation in milliseconds
           useNativeDriver: true // This improves animation performance
         }
       ).start();
@@ -60,7 +60,7 @@ export default function LightMap() {
         translateY,
         {
           toValue: 300, // Return to initial position below the screen
-          duration: 500, // Duration of the animation in milliseconds
+          duration: 250, // Duration of the animation in milliseconds
           useNativeDriver: true // This improves animation performance
         }
       ).start();
@@ -81,7 +81,7 @@ export default function LightMap() {
 
   return (
     <View style={styles.container}>
-     <MapView
+      <MapView
         style={styles.map}
         initialRegion={{
           latitude: 59.3293, 
@@ -102,13 +102,13 @@ export default function LightMap() {
         ))}
       </MapView>
       {!selectedMarker && (
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.textInput}
-          placeholder="Type here..."
-          // Add any additional props or event handlers as needed
-        />
-      </View>
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.textInput}
+            placeholder="Type here..."
+            // Add any additional props or event handlers as needed
+          />
+        </View>
       )}
       {selectedMarker && (
         <Animated.View style={[
