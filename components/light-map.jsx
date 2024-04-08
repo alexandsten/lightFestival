@@ -60,7 +60,7 @@ export default function LightMap() {
         translateY,
         {
           toValue: 300, // Return to initial position below the screen
-          duration: 250, // Duration of the animation in milliseconds
+          duration: 150, // Duration of the animation in milliseconds
           useNativeDriver: true // This improves animation performance
         }
       ).start();
@@ -75,8 +75,10 @@ export default function LightMap() {
   };
 
   const handleCloseButtonPress = () => {
-    setSelectedMarker(null);
-    toggleVisibility()
+    toggleVisibility() 
+    setTimeout(() => {
+      setSelectedMarker(null); 
+    }, 200);
   };
 
   return (
