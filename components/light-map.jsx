@@ -2,11 +2,28 @@ import React, { useState, useRef, useEffect  } from 'react';
 import { View, TextInput, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { Animated } from 'react-native';
+import axios from 'axios';
 
 export default function LightMap() {
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [isVisible, setIsVisible] = useState(false);
   const translateY = useRef(new Animated.Value(300)).current;
+
+    const [posts, setPosts] = useState([]);
+  
+    useEffect(() => {
+      // Fetch WordPress posts
+      const fetchPosts = async () => {
+        try {
+          const response = await axios.get('https://nobelweeklights.se/wp-json/wp/v2/installation?categories=55&_fields[]=artwork_name&per_page=17');
+          setPosts(response.data);
+        } catch (error) {
+          console.error('Error fetching WordPress posts:', error);
+        }
+      };
+      console.log(posts)
+      fetchPosts();
+    }, []); 
 
   const toggleVisibility = () => {
     setIsVisible(!isVisible);
