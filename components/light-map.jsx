@@ -10,20 +10,36 @@ export default function LightMap() {
   const translateY = useRef(new Animated.Value(300)).current;
 
     const [posts, setPosts] = useState([]);
-  
-    useEffect(() => {
-      // Fetch WordPress posts
-      const fetchPosts = async () => {
-        try {
-          const response = await axios.get('https://nobelweeklights.se/wp-json/wp/v2/installation?categories=55&_fields[]=artwork_name&per_page=17');
-          setPosts(response.data);
-        } catch (error) {
-          console.error('Error fetching WordPress posts:', error);
-        }
-      };
-      console.log(posts)
-      fetchPosts();
-    }, []); 
+
+    const [markers, setMarkers] = useState([]);
+
+  useEffect(() => {
+    // Fetch WordPress posts
+    const fetchPosts = async () => {
+      try {
+        const response = await axios.get('https://nobelweeklights.se/wp-json/wp/v2/installation?categories=55&_fields[]=artwork_name&_fields[]=artwork_description&_fields[]=location&_fields[]=location_lat&_fields[]=location_longitude&_fields[]=artwork_photo&_fields[]=artist_name&per_page=17');
+        setPosts(response.data);
+        
+        // Transform posts into marker objects
+        const transformedMarkers = response.data.map(post => ({
+          title: post.artwork_name,
+          picture: post.artwork_photo,
+          description: post.artwork_description,
+          coordinate: {
+            latitude: parseFloat(post.location_lat), // Assuming location_lat is a string representing latitude
+            longitude: parseFloat(post.location_longitude), // Assuming artwork_long is a string representing longitude
+          },
+        }));
+        
+        setMarkers(transformedMarkers);
+      } catch (error) {
+        console.error('Error fetching WordPress posts:', error);
+      }
+    };
+
+    fetchPosts();
+  }, []);
+
 
   const toggleVisibility = () => {
     setIsVisible(!isVisible);
@@ -51,36 +67,7 @@ export default function LightMap() {
     }
   }, [isVisible]);
 
-  const markers = [
-    {
-      title: 'Marker 1',
-      picture: 'url',
-      description: 'Marker 1 description: detta är en beskrivning',
-      coordinate: {
-        latitude: 37.78825,
-        longitude: -122.4324,
-      },
-    },
-    {
-        title: 'Marker 2',
-        picture: 'url',
-        description: 'Marker 2 description: detta är en beskrivning',
-        coordinate: {
-          latitude: 37.75885,
-          longitude: -122.4384,
-        },
-      },
-      {
-        title: 'Marker 3',
-        picture: 'url',
-        description: 'Marker 3 description: detta är en beskrivning',
-        coordinate: {
-          latitude: 37.78245,
-          longitude: -122.4344,
-        },
-      },
-    // Add more markers as needed
-  ];
+
 
   const handleMarkerPress = (marker) => {
     setSelectedMarker(marker);
@@ -94,13 +81,13 @@ export default function LightMap() {
 
   return (
     <View style={styles.container}>
-      <MapView
+     <MapView
         style={styles.map}
         initialRegion={{
-          latitude: 37.78825,
-          longitude: -122.4324,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
+          latitude: 59.3293, 
+          longitude: 18.0686, 
+          latitudeDelta: 0.1, 
+          longitudeDelta: 0.1, 
         }}
       >
         {markers.map((marker, index) => (
