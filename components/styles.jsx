@@ -57,26 +57,38 @@ export const styles = StyleSheet.create({
     right: 15, // Optionally set it to the right if needed
     padding: 10,
     backgroundColor: 'rgba(255, 255, 255, 0.3)',
-    borderRadius: 8,
+    borderRadius: 24,
+    width: 54,
+    justifyContent: 'center', 
+    alignItems: 'center',
   },  
   readMoreButton: {
     position: 'absolute',
     bottom: 5,
-    right: 205, // Optionally set it to the right if needed
+    right: 205, 
     padding: 10,
     backgroundColor: '#CC3366',
-    borderRadius: 8,
+    borderRadius: 24,
+    width: 130,
+    justifyContent: 'center', 
+    alignItems: 'center',
   },  
   lineButton: {
     position: 'absolute',
     bottom: 5,
-    right: 105, // Optionally set it to the right if needed
+    right: 90, 
     padding: 10,
-    backgroundColor: '#CC3366',
-    borderRadius: 8,
+    backgroundColor: 'white',
+    borderRadius: 24,
+    width: 100,
+    justifyContent: 'center', 
+    alignItems: 'center',
   }, 
   closeButtonText: {
     color: 'white',
+  },
+  lineText: {
+    color: 'black',
   },
   columnContainer: {
     flexDirection: 'column',

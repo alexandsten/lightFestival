@@ -193,10 +193,10 @@ export default function LightMap() {
             <Text style={styles.closeButtonText}>Read More</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={handleDrawLine} style={styles.lineButton}>
-            <Text style={styles.closeButtonText}>Draw Line</Text>
+            <Text style={styles.lineText}>Find way</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={handleCloseButtonPress} style={styles.closeButton}>
-            <Text style={styles.closeButtonText}>Close</Text>
+            <Text style={styles.closeButtonText}>X</Text>
           </TouchableOpacity>
         </Animated.View>
       )}
