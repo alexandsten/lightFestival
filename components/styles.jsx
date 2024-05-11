@@ -36,16 +36,16 @@ export const styles = StyleSheet.create({
     right: 20,
     backgroundColor: 'rgba(28, 27, 31, 0.8)',
     borderRadius: 15,
-    padding: 15, // Increase the padding for more height
+    paddingBottom: 50,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingVertical: 80,
   },
   selectedMarkerTitle: {
     color: 'white',
     flex: 1, // Allow text to take available space
-    fontSize: 22
+    fontSize: 22,
+    marginTop: 150
   },
   selectedMarkerText: {
     color: 'white',
@@ -64,7 +64,7 @@ export const styles = StyleSheet.create({
     bottom: 5,
     right: 205, // Optionally set it to the right if needed
     padding: 10,
-    backgroundColor: 'rgba(255, 255, 255, 0.3)',
+    backgroundColor: '#CC3366',
     borderRadius: 8,
   },  
   closeButtonText: {
@@ -74,16 +74,22 @@ export const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+    height: 450,
+    borderRadius: 50,
+    overflow: 'hidden', // Ensure content is clipped to border radius
+    borderRadius: 30,
   },
   descriptionContainer: {
-    backgroundColor: '#383838', // Background color for the description
-    padding: 10, // Add padding for some spacing
+    backgroundColor: '#383838',
+    padding: 10, 
+    height: 150
   },
   titleContainer: {
-    height: 50, // Fixed height for the title
-    backgroundColor: '#29234a', // Unique background color for the title
-    justifyContent: 'center', // Align text vertically in the center
-    paddingHorizontal: 10, // Add padding horizontally for some spacing
+    backgroundColor: '#29234a',
+    justifyContent: 'center',
+    paddingHorizontal: 10, 
+    height: 150,
+    width: 150
   },
 
 });

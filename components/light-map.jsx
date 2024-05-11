@@ -4,6 +4,7 @@ import MapView, { Marker } from 'react-native-maps';
 import { Animated } from 'react-native';
 import axios from 'axios';
 import { styles } from './styles';
+import { ImageBackground } from 'react-native';
 
 export default function LightMap() {
   const [selectedMarker, setSelectedMarker] = useState(null);
@@ -118,18 +119,22 @@ export default function LightMap() {
           styles.selectedMarkerContainer,
           { transform: [{ translateY }] }
         ]}>
-          <View style={styles.columnContainer}>
-            <View style={styles.titleContainer}>
+          <ImageBackground
+              source={{ uri: selectedMarker.picture }}
+              style={styles.columnContainer}
+              resizeMode="cover"
+            >
+       
               <Text style={styles.selectedMarkerTitle}>
-                {`Selected Marker: ${selectedMarker.title}`}
+                {`${selectedMarker.title}`}
               </Text>
-            </View>
+           
             <View style={styles.descriptionContainer}>
               <Text style={styles.selectedMarkerText}>
-                {`Description: ${selectedMarker.description}`}
+                {`${selectedMarker.description}`}
               </Text>
             </View>
-          </View>
+          </ImageBackground>
          
           <TouchableOpacity onPress={handleCloseButtonPress} style={styles.readMoreButton}>
             <Text style={styles.closeButtonText}>Read More</Text>
