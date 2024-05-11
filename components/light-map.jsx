@@ -1,6 +1,6 @@
-import React, { useState, useRef, useEffect  } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { View, TextInput, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import MapView, { Marker } from 'react-native-maps';
+import MapView, { Marker, Polyline } from 'react-native-maps';
 import { Animated } from 'react-native';
 import axios from 'axios';
 import { styles } from './styles';
@@ -12,38 +12,39 @@ export default function LightMap() {
   const [isVisible, setIsVisible] = useState(false);
   const translateY = useRef(new Animated.Value(300)).current;
 
-    const [posts, setPosts] = useState([]);
-    const [userLocation, setUserLocation] = useState(null);
-    const [markers, setMarkers] = useState([]);
+  const [posts, setPosts] = useState([]);
+  const [userLocation, setUserLocation] = useState(null);
+  const [markers, setMarkers] = useState([]);
+  const [lineCoordinates, setLineCoordinates] = useState([]);
 
-    useEffect(() => {
-      // Define an async function to get user's location
-      const getUserLocation = async () => {
-        try {
-          // Request permission to access device's location
-          const { status } = await Location.requestForegroundPermissionsAsync();
-          
-          if (status !== 'granted') {
-            console.error('Permission to access location was denied');
-            return;
-          }
-  
-          // Get current location coordinates
-          const location = await Location.getCurrentPositionAsync({});
-          
-          // Extract latitude and longitude from location object
-          const { latitude, longitude } = location.coords;
-  
-          // Set userLocation state with current coordinates
-          setUserLocation({ latitude, longitude });
-        } catch (error) {
-          console.error('Error getting user location:', error);
+  useEffect(() => {
+    // Define an async function to get user's location
+    const getUserLocation = async () => {
+      try {
+        // Request permission to access device's location
+        const { status } = await Location.requestForegroundPermissionsAsync();
+        
+        if (status !== 'granted') {
+          console.error('Permission to access location was denied');
+          return;
         }
-      };
-  
-      // Call the function to get user's location
-      getUserLocation();
-    }, []);
+
+        // Get current location coordinates
+        const location = await Location.getCurrentPositionAsync({});
+        
+        // Extract latitude and longitude from location object
+        const { latitude, longitude } = location.coords;
+
+        // Set userLocation state with current coordinates
+        setUserLocation({ latitude, longitude });
+      } catch (error) {
+        console.error('Error getting user location:', error);
+      }
+    };
+
+    // Call the function to get user's location
+    getUserLocation();
+  }, []);
 
   useEffect(() => {
     // Fetch WordPress posts
@@ -72,7 +73,6 @@ export default function LightMap() {
     fetchPosts();
   }, []);
 
-
   const toggleVisibility = () => {
     setIsVisible(!isVisible);
   };
@@ -99,18 +99,28 @@ export default function LightMap() {
     }
   }, [isVisible]);
 
-
-
   const handleMarkerPress = (marker) => {
     setSelectedMarker(marker);
-    toggleVisibility()
+    toggleVisibility();
   };
 
   const handleCloseButtonPress = () => {
-    toggleVisibility() 
+    toggleVisibility();
     setTimeout(() => {
-      setSelectedMarker(null); 
+      setSelectedMarker(null);
     }, 200);
+  };
+
+  const handleDrawLine = () => {
+    if (selectedMarker && userLocation) {
+      // Create a line from user's location to selected marker's location
+      const coordinates = [
+        { latitude: userLocation.latitude, longitude: userLocation.longitude },
+        { latitude: selectedMarker.coordinate.latitude, longitude: selectedMarker.coordinate.longitude }
+      ];
+      setLineCoordinates(coordinates);
+    }
+    handleCloseButtonPress()
   };
 
   return (
@@ -136,11 +146,18 @@ export default function LightMap() {
             onPress={() => handleMarkerPress(marker)}
           />
         ))}
-         {userLocation && (
+        {userLocation && (
           <Marker
             coordinate={userLocation}
             title="Your Location"
             description="You are here"
+          />
+        )}
+        {lineCoordinates.length > 0 && (
+          <Polyline
+            coordinates={lineCoordinates}
+            strokeColor="#FF0000"
+            strokeWidth={2}
           />
         )}
       </MapView>
@@ -159,30 +176,29 @@ export default function LightMap() {
           { transform: [{ translateY }] }
         ]}>
           <ImageBackground
-              source={{ uri: selectedMarker.picture }}
-              style={styles.columnContainer}
-              resizeMode="cover"
-            >
-       
-              <Text style={styles.selectedMarkerTitle}>
-                {`${selectedMarker.title}`}
-              </Text>
-           
+            source={{ uri: selectedMarker.picture }}
+            style={styles.columnContainer}
+            resizeMode="cover"
+          >
+            <Text style={styles.selectedMarkerTitle}>
+              {`${selectedMarker.title}`}
+            </Text>
             <View style={styles.descriptionContainer}>
               <Text style={styles.selectedMarkerText}>
                 {`${selectedMarker.description}`}
               </Text>
             </View>
           </ImageBackground>
-         
           <TouchableOpacity onPress={handleCloseButtonPress} style={styles.readMoreButton}>
             <Text style={styles.closeButtonText}>Read More</Text>
           </TouchableOpacity>
-            <TouchableOpacity onPress={handleCloseButtonPress} style={styles.closeButton}>
+          <TouchableOpacity onPress={handleDrawLine} style={styles.lineButton}>
+            <Text style={styles.closeButtonText}>Draw Line</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={handleCloseButtonPress} style={styles.closeButton}>
             <Text style={styles.closeButtonText}>Close</Text>
           </TouchableOpacity>
         </Animated.View>
-        
       )}
     </View>
   );

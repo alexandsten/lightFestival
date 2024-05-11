@@ -67,6 +67,14 @@ export const styles = StyleSheet.create({
     backgroundColor: '#CC3366',
     borderRadius: 8,
   },  
+  lineButton: {
+    position: 'absolute',
+    bottom: 5,
+    right: 105, // Optionally set it to the right if needed
+    padding: 10,
+    backgroundColor: '#CC3366',
+    borderRadius: 8,
+  }, 
   closeButtonText: {
     color: 'white',
   },
