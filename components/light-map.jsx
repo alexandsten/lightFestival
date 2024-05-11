@@ -116,6 +116,7 @@ export default function LightMap() {
   return (
     <View style={styles.container}>
       <MapView
+        onPress={handleCloseButtonPress}
         style={styles.map}
         showsUserLocation={true} 
         initialRegion={{
