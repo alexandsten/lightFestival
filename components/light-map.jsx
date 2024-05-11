@@ -5,6 +5,7 @@ import { Animated } from 'react-native';
 import axios from 'axios';
 import { styles } from './styles';
 import { ImageBackground } from 'react-native';
+import * as Location from 'expo-location'; 
 
 export default function LightMap() {
   const [selectedMarker, setSelectedMarker] = useState(null);
@@ -12,8 +13,37 @@ export default function LightMap() {
   const translateY = useRef(new Animated.Value(300)).current;
 
     const [posts, setPosts] = useState([]);
-
+    const [userLocation, setUserLocation] = useState(null);
     const [markers, setMarkers] = useState([]);
+
+    useEffect(() => {
+      // Define an async function to get user's location
+      const getUserLocation = async () => {
+        try {
+          // Request permission to access device's location
+          const { status } = await Location.requestForegroundPermissionsAsync();
+          
+          if (status !== 'granted') {
+            console.error('Permission to access location was denied');
+            return;
+          }
+  
+          // Get current location coordinates
+          const location = await Location.getCurrentPositionAsync({});
+          
+          // Extract latitude and longitude from location object
+          const { latitude, longitude } = location.coords;
+  
+          // Set userLocation state with current coordinates
+          setUserLocation({ latitude, longitude });
+        } catch (error) {
+          console.error('Error getting user location:', error);
+        }
+      };
+  
+      // Call the function to get user's location
+      getUserLocation();
+    }, []);
 
   useEffect(() => {
     // Fetch WordPress posts
@@ -87,6 +117,7 @@ export default function LightMap() {
     <View style={styles.container}>
       <MapView
         style={styles.map}
+        showsUserLocation={true} 
         initialRegion={{
           latitude: 59.3293, 
           longitude: 18.0686, 
@@ -104,6 +135,13 @@ export default function LightMap() {
             onPress={() => handleMarkerPress(marker)}
           />
         ))}
+         {userLocation && (
+          <Marker
+            coordinate={userLocation}
+            title="Your Location"
+            description="You are here"
+          />
+        )}
       </MapView>
       {!selectedMarker && (
         <View style={styles.inputContainer}>
@@ -142,8 +180,6 @@ export default function LightMap() {
             <TouchableOpacity onPress={handleCloseButtonPress} style={styles.closeButton}>
             <Text style={styles.closeButtonText}>Close</Text>
           </TouchableOpacity>
-         
-          
         </Animated.View>
         
       )}

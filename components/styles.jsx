@@ -35,7 +35,7 @@ export const styles = StyleSheet.create({
     left: 20,
     right: 20,
     backgroundColor: 'rgba(28, 27, 31, 0.8)',
-    borderRadius: 15,
+    borderRadius: 30,
     paddingBottom: 50,
     flexDirection: 'row',
     alignItems: 'center',
