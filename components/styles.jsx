@@ -36,20 +36,42 @@ export const styles = StyleSheet.create({
     right: 20,
     backgroundColor: 'rgba(28, 27, 31, 0.8)',
     borderRadius: 30,
-    paddingBottom: 50,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  pictureBackground: {
+    position: 'absolute',
+    bottom: 40,
+    left: 20,
+    right: 20,
+    backgroundColor: 'rgba(28, 27, 31, 0.8)',
+    borderRadius: 30,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
   },
   selectedMarkerTitle: {
     color: 'white',
-    flex: 1, // Allow text to take available space
+// Allow text to take available space
     fontSize: 22,
-    marginTop: 150
+
+  },
+  selectedMarkerArtist: {
+    color: 'white',
+  // Allow text to take available space
+    fontSize: 16,
+
+  },
+  selectedMarkerLocation: {
+    color: 'white',
+   // Allow text to take available space
+    fontSize: 16,
+
   },
   selectedMarkerText: {
-    color: 'white',
-    flex: 1, // Allow text to take available space
+    color: 'white', 
+    display: 'flex'
   },
   closeButton: {
     position: 'absolute',
@@ -100,9 +122,14 @@ export const styles = StyleSheet.create({
     borderRadius: 30,
   },
   descriptionContainer: {
-    backgroundColor: '#383838',
-    padding: 10, 
-    height: 150
+    padding: 10,
+    flex: 1,
+    minHeight: 20,
+    maxHeight: 30,
+    justifyContent: 'flex-end',
+    paddingBottom: 10,
+    color: 'white'
+    // or 'center'
   },
   titleContainer: {
     backgroundColor: '#29234a',

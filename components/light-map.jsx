@@ -1,16 +1,18 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, TextInput, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, TextInput, Text, StyleSheet, TouchableOpacity, useWindowDimensions } from 'react-native';
 import MapView, { Marker, Polyline } from 'react-native-maps';
 import { Animated } from 'react-native';
 import axios from 'axios';
 import { styles } from './styles';
 import { ImageBackground } from 'react-native';
 import * as Location from 'expo-location'; 
+import HTML from 'react-native-render-html';
 
 export default function LightMap() {
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [isVisible, setIsVisible] = useState(false);
   const translateY = useRef(new Animated.Value(300)).current;
+  const windowWidth = useWindowDimensions().width;
 
   const [posts, setPosts] = useState([]);
   const [userLocation, setUserLocation] = useState(null);
@@ -58,6 +60,8 @@ export default function LightMap() {
           title: post.artwork_name,
           picture: post.artwork_photo,
           description: post.artwork_description,
+          artist: post.artist_name,
+          location: post.location,
           coordinate: {
             latitude: parseFloat(post.location_lat), // Assuming location_lat is a string representing latitude
             longitude: parseFloat(post.location_longitude), // Assuming artwork_long is a string representing longitude
@@ -175,20 +179,31 @@ export default function LightMap() {
           styles.selectedMarkerContainer,
           { transform: [{ translateY }] }
         ]}>
-          <ImageBackground
-            source={{ uri: selectedMarker.picture }}
-            style={styles.columnContainer}
-            resizeMode="cover"
-          >
-            <Text style={styles.selectedMarkerTitle}>
-              {`${selectedMarker.title}`}
-            </Text>
-            <View style={styles.descriptionContainer}>
-              <Text style={styles.selectedMarkerText}>
-                {`${selectedMarker.description}`}
+          <TouchableOpacity  style={styles.columnContainer}>
+            <ImageBackground
+              source={{ uri: selectedMarker.picture }}
+              style={styles.columnContainer}
+              resizeMode="cover"
+            >
+              <Text style={styles.selectedMarkerTitle}>
+                {`${selectedMarker.title}`}
               </Text>
+              <Text style={styles.selectedMarkerArtist}>
+                {`${selectedMarker.artist}`}
+              </Text>
+              <Text style={styles.selectedMarkerLocation}>
+                {`${selectedMarker.location}`}
+              </Text>
+             <View style={styles.descriptionContainer}>
+              <HTML
+                contentWidth={windowWidth}
+                style={styles.selectedMarkerText } 
+                source={{ html: selectedMarker.description }}
+                tagsStyles={{ p: { margin: 0, padding: 0 } }}
+              />
             </View>
-          </ImageBackground>
+            </ImageBackground>
+          </TouchableOpacity>
           <TouchableOpacity onPress={handleCloseButtonPress} style={styles.readMoreButton}>
             <Text style={styles.closeButtonText}>Read More</Text>
           </TouchableOpacity>
