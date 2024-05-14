@@ -188,19 +188,27 @@ export default function LightMap() {
               <Text style={styles.selectedMarkerTitle}>
                 {`${selectedMarker.title}`}
               </Text>
-              <Text style={styles.selectedMarkerArtist}>
+              <Text style={styles.selectedMarkerText}>
                 {`${selectedMarker.artist}`}
               </Text>
-              <Text style={styles.selectedMarkerLocation}>
+              <Text style={styles.selectedMarkerText}>
                 {`${selectedMarker.location}`}
               </Text>
              <View style={styles.descriptionContainer}>
+             <View style={styles.descriptionContainer}>
+             <View style={styles.descriptionContainer}>
               <HTML
                 contentWidth={windowWidth}
-                style={styles.selectedMarkerText } 
-                source={{ html: selectedMarker.description }}
+                source={{ 
+                  html: `<div style="color: white; min-height: 50px; max-height: 50px; overflow: hidden;">${selectedMarker.description}</div>` 
+                }}
                 tagsStyles={{ p: { margin: 0, padding: 0 } }}
               />
+            </View>
+            </View>
+              <Text style={styles.selectedMarkerText}>
+                {`${selectedMarker.location}`}
+              </Text>
             </View>
             </ImageBackground>
           </TouchableOpacity>
