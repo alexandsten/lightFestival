@@ -34,7 +34,7 @@ export const styles = StyleSheet.create({
     bottom: 20,
     left: 20,
     right: 20,
-    backgroundColor: 'rgba(28, 27, 31, 0.8)',
+    backgroundColor: 'rgba(28, 27, 31, 0.9)',
     borderRadius: 30,
     flexDirection: 'row',
     alignItems: 'center',
