@@ -182,21 +182,23 @@ export default function LightMap() {
           <TouchableOpacity  style={styles.columnContainer}>
             <ImageBackground
               source={{ uri: selectedMarker.picture }}
-              style={styles.columnContainer}
+              style={styles.columnContainerPicture}
               resizeMode="cover"
             >
-              <Text style={styles.selectedMarkerTitle}>
-                {`${selectedMarker.title}`}
-              </Text>
-              <Text style={styles.selectedMarkerText}>
-                {`${selectedMarker.artist}`}
-              </Text>
-              <Text style={styles.selectedMarkerText}>
-                {`${selectedMarker.location}`}
-              </Text>
+              <TouchableOpacity  style={styles.pictureContainerElements}>
+                <Text style={styles.selectedMarkerTitle}>
+                  {`${selectedMarker.title}`}
+                </Text>
+                <Text style={styles.selectedMarkerText}>
+                  {`${selectedMarker.artist}`}
+                </Text>
+                <Text style={styles.selectedMarkerText}>
+                  {`${selectedMarker.location}`}
+                </Text>
+              </TouchableOpacity>
+            </ImageBackground>
              <View style={styles.descriptionContainer}>
-             <View style={styles.descriptionContainer}>
-             <View style={styles.descriptionContainer}>
+            
               <HTML
                 contentWidth={windowWidth}
                 source={{ 
@@ -204,13 +206,10 @@ export default function LightMap() {
                 }}
                 tagsStyles={{ p: { margin: 0, padding: 0 } }}
               />
+
+      
             </View>
-            </View>
-              <Text style={styles.selectedMarkerText}>
-                {`${selectedMarker.location}`}
-              </Text>
-            </View>
-            </ImageBackground>
+            
           </TouchableOpacity>
           <TouchableOpacity onPress={handleCloseButtonPress} style={styles.readMoreButton}>
             <Text style={styles.closeButtonText}>Read More</Text>

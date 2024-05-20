@@ -78,7 +78,7 @@ export const styles = StyleSheet.create({
     bottom: 5,
     right: 15, // Optionally set it to the right if needed
     padding: 10,
-    backgroundColor: 'rgba(255, 255, 255, 0.3)',
+    backgroundColor: 'black',
     borderRadius: 24,
     width: 54,
     justifyContent: 'center', 
@@ -113,23 +113,40 @@ export const styles = StyleSheet.create({
     color: 'black',
   },
   columnContainer: {
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 450,
-    borderRadius: 50,
-    overflow: 'hidden', // Ensure content is clipped to border radius
-    borderRadius: 30,
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: 340,
+      borderRadius: 50,
+      overflow: 'hidden', 
+      borderRadius: 30,
   },
+  columnContainerPicture: {
+      flexDirection: 'column',
+      justifyContent: 'flex-end', 
+      alignItems: 'flex-start',
+      height: 160,
+      width: '100%',
+      borderRadius: 30, 
+      overflow: 'hidden',
+      top: -40,
+      marginBottom: 30,
+      paddingBottom: 15
+    },
+    pictureContainerElements: {
+    right: -40
+  },
+
   descriptionContainer: {
     padding: 10,
     flex: 1,
-    minHeight: 20,
-    maxHeight: 30,
+    minHeight: 50,
+    maxHeight: 80,
     justifyContent: 'flex-end',
-    paddingBottom: 10,
-    color: 'white'
-    // or 'center'
+    paddingBottom: 0,
+    color: 'white',
+    top: -70,
+    overflow: 'hidden'
   },
   titleContainer: {
     backgroundColor: '#29234a',
