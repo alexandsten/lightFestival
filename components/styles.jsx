@@ -146,7 +146,8 @@ export const styles = StyleSheet.create({
     paddingBottom: 0,
     color: 'white',
     top: -70,
-    overflow: 'hidden'
+    overflow: 'hidden',
+    marginLeft: 8
   },
   titleContainer: {
     backgroundColor: '#29234a',
