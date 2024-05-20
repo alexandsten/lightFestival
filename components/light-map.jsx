@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, TextInput, Text, StyleSheet, TouchableOpacity, useWindowDimensions } from 'react-native';
+import { View, TextInput, Text, StyleSheet, TouchableOpacity, useWindowDimensions, Platform, Linking } from 'react-native';
 import MapView, { Marker, Polyline } from 'react-native-maps';
 import { Animated } from 'react-native';
 import axios from 'axios';
@@ -115,16 +115,20 @@ export default function LightMap() {
     }, 200);
   };
 
-  const handleDrawLine = () => {
+  const handleOpenMapForDirections = () => {
     if (selectedMarker && userLocation) {
-      // Create a line from user's location to selected marker's location
-      const coordinates = [
-        { latitude: userLocation.latitude, longitude: userLocation.longitude },
-        { latitude: selectedMarker.coordinate.latitude, longitude: selectedMarker.coordinate.longitude }
-      ];
-      setLineCoordinates(coordinates);
+      const userLatitude = userLocation.latitude;
+      const userLongitude = userLocation.longitude;
+      const markerLatitude = selectedMarker.coordinate.latitude;
+      const markerLongitude = selectedMarker.coordinate.longitude;
+
+      const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${userLatitude},${userLongitude}&destination=${markerLatitude},${markerLongitude}&travelmode=driving`;
+      const appleMapsUrl = `http://maps.apple.com/?saddr=${userLatitude},${userLongitude}&daddr=${markerLatitude},${markerLongitude}&dirflg=d`;
+
+      const url = Platform.OS === 'ios' ? appleMapsUrl : googleMapsUrl;
+      Linking.openURL(url);
     }
-    handleCloseButtonPress()
+    handleCloseButtonPress();
   };
 
   return (
@@ -214,7 +218,7 @@ export default function LightMap() {
           <TouchableOpacity onPress={handleCloseButtonPress} style={styles.readMoreButton}>
             <Text style={styles.closeButtonText}>Read More</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={handleDrawLine} style={styles.lineButton}>
+          <TouchableOpacity onPress={handleOpenMapForDirections} style={styles.lineButton}>
             <Text style={styles.lineText}>Find way</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={handleCloseButtonPress} style={styles.closeButton}>
