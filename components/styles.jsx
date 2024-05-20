@@ -31,7 +31,7 @@ export const styles = StyleSheet.create({
   },
   selectedMarkerContainer: {
     position: 'absolute',
-    bottom: 20,
+    bottom: 40,
     left: 20,
     right: 20,
     backgroundColor: 'rgba(28, 27, 31, 0.9)',
@@ -75,9 +75,9 @@ export const styles = StyleSheet.create({
   },
   closeButton: {
     position: 'absolute',
-    bottom: 5,
+    bottom: 20,
     right: 15, // Optionally set it to the right if needed
-    padding: 10,
+    padding: 6,
     backgroundColor: 'black',
     borderRadius: 24,
     width: 54,
@@ -86,10 +86,10 @@ export const styles = StyleSheet.create({
   },  
   readMoreButton: {
     position: 'absolute',
-    bottom: 5,
+    bottom: 20,
     right: 205, 
-    padding: 10,
-    backgroundColor: '#CC3366',
+    padding: 6,
+    backgroundColor: 'rgba(204, 51, 102, 0.75)',
     borderRadius: 24,
     width: 130,
     justifyContent: 'center', 
@@ -97,9 +97,9 @@ export const styles = StyleSheet.create({
   },  
   lineButton: {
     position: 'absolute',
-    bottom: 5,
+    bottom: 20,
     right: 90, 
-    padding: 10,
+    padding: 6,
     backgroundColor: 'white',
     borderRadius: 24,
     width: 100,
