@@ -105,7 +105,7 @@ export default function LightMap() {
 
   const handleMarkerPress = (marker) => {
     setSelectedMarker(marker);
-    toggleVisibility();
+    setIsVisible(true);
   };
 
   const handleCloseButtonPress = () => {
@@ -150,7 +150,7 @@ export default function LightMap() {
             coordinate={marker.coordinate}
             title={marker.title}
             description="Custom description here"
-            image={require('../img/marker2.png')}
+            image={require('../img/New_pin_2x.png')}
             onPress={() => handleMarkerPress(marker)}
           />
         ))}
