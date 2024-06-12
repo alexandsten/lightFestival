@@ -11,6 +11,7 @@ import HTML from 'react-native-render-html';
 export default function LightMap() {
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [isReadMore, setReadMore] = useState(false);
   const translateY = useRef(new Animated.Value(300)).current;
   const windowWidth = useWindowDimensions().width;
 
@@ -79,6 +80,10 @@ export default function LightMap() {
 
   const toggleVisibility = () => {
     setIsVisible(!isVisible);
+  };
+
+  const readMore = () => {
+    setReadMore(!isReadMore)
   };
 
   useEffect(() => {
@@ -150,7 +155,7 @@ export default function LightMap() {
             coordinate={marker.coordinate}
             title={marker.title}
             description="Custom description here"
-            image={require('../img/New_pin_2x.png')}
+            image={require('../img/Pin_Update_2x.png')}
             onPress={() => handleMarkerPress(marker)}
           />
         ))}
@@ -183,7 +188,7 @@ export default function LightMap() {
           styles.selectedMarkerContainer,
           { transform: [{ translateY }] }
         ]}>
-          <TouchableOpacity  style={styles.columnContainer}>
+         <TouchableOpacity style={isReadMore ? styles.readMoreContainer : styles.columnContainer}>
             <ImageBackground
               source={{ uri: selectedMarker.picture }}
               style={styles.columnContainerPicture}
@@ -201,6 +206,21 @@ export default function LightMap() {
                 </Text>
               </TouchableOpacity>
             </ImageBackground>
+
+            {isReadMore ? (
+              <View style={styles.readMoreDescriptionContainer}>
+            
+              <HTML
+                contentWidth={windowWidth}
+                source={{ 
+                  html: `<div style="color: white; min-height: 250px; max-height: 250px; overflow: hidden;">${selectedMarker.description}</div>` 
+                }}
+                tagsStyles={{ p: { margin: 5, padding: 5 } }}
+              />
+
+      
+            </View>
+            ): (
              <View style={styles.descriptionContainer}>
             
               <HTML
@@ -212,10 +232,12 @@ export default function LightMap() {
               />
 
       
-            </View>
+            </View> 
+            )}
+             
             
           </TouchableOpacity>
-          <TouchableOpacity onPress={handleCloseButtonPress} style={styles.readMoreButton}>
+          <TouchableOpacity onPress={readMore} style={styles.readMoreButton}>
             <Text style={styles.closeButtonText}>Read More</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={handleOpenMapForDirections} style={styles.lineButton}>
