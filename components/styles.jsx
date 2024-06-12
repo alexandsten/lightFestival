@@ -135,6 +135,15 @@ export const styles = StyleSheet.create({
     backgroundColor: 'rgba(28, 27, 31, 0.9)',
     borderRadius: 30,
   },
+  calloutContainer: {
+    backgroundColor: 'blue',
+    borderRadius: 10,
+    padding: 10,
+  },
+  calloutText: {
+    color: 'black',
+    fontSize: 16,
+  },
   columnContainerPicture: {
       flexDirection: 'column',
       justifyContent: 'flex-end', 

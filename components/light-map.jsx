@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { View, TextInput, Text, StyleSheet, TouchableOpacity, useWindowDimensions, Platform, Linking } from 'react-native';
-import MapView, { Marker, Polyline } from 'react-native-maps';
+import MapView, { Marker, Polyline, Callout } from 'react-native-maps';
 import { Animated } from 'react-native';
 import axios from 'axios';
 import { styles } from './styles';
@@ -153,19 +153,28 @@ export default function LightMap() {
           <Marker
             key={index}
             coordinate={marker.coordinate}
-            title={marker.title}
-            description="Custom description here"
+            // title={marker.title}
+            // description={marker.title}
             image={require('../img/Pin_Update_2x.png')}
             onPress={() => handleMarkerPress(marker)}
+            calloutAnchor={{ x: 0.5, y: 0.5 }} // Adjust the callout position if needed
+            calloutStyle={styles.calloutContainer} // Apply custom styling to the callout container
+            calloutTextStyle={styles.calloutText} // Apply custom styling to the callout text
           />
         ))}
-        {userLocation && (
+        {/* {userLocation && (
           <Marker
             coordinate={userLocation}
             title="Your Location"
             description="You are here"
-          />
-        )}
+          >
+             <Callout tooltip>
+          <View style={styles.calloutContainer}>
+            <Text style={styles.calloutText}>You are here</Text>
+          </View>
+        </Callout>
+          </Marker>
+        )} */}
         {lineCoordinates.length > 0 && (
           <Polyline
             coordinates={lineCoordinates}
