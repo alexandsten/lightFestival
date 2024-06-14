@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, TextInput, Text, StyleSheet, TouchableOpacity, useWindowDimensions, Platform, Linking } from 'react-native';
-import MapView, { Marker, Polyline, Callout } from 'react-native-maps';
+import { View, TextInput, Text, StyleSheet, TouchableOpacity, useWindowDimensions, Platform, Linking, ScrollView } from 'react-native';
+import MapView, { Marker, Polyline } from 'react-native-maps';
 import { Animated } from 'react-native';
 import axios from 'axios';
 import { styles } from './styles';
@@ -14,6 +14,7 @@ export default function LightMap() {
   const [isReadMore, setReadMore] = useState(false);
   const translateY = useRef(new Animated.Value(300)).current;
   const windowWidth = useWindowDimensions().width;
+  const windowHeight = useWindowDimensions().height;
 
   const [posts, setPosts] = useState([]);
   const [userLocation, setUserLocation] = useState(null);
@@ -21,10 +22,8 @@ export default function LightMap() {
   const [lineCoordinates, setLineCoordinates] = useState([]);
 
   useEffect(() => {
-    // Define an async function to get user's location
     const getUserLocation = async () => {
       try {
-        // Request permission to access device's location
         const { status } = await Location.requestForegroundPermissionsAsync();
         
         if (status !== 'granted') {
@@ -32,31 +31,24 @@ export default function LightMap() {
           return;
         }
 
-        // Get current location coordinates
         const location = await Location.getCurrentPositionAsync({});
-        
-        // Extract latitude and longitude from location object
         const { latitude, longitude } = location.coords;
 
-        // Set userLocation state with current coordinates
         setUserLocation({ latitude, longitude });
       } catch (error) {
         console.error('Error getting user location:', error);
       }
     };
 
-    // Call the function to get user's location
     getUserLocation();
   }, []);
 
   useEffect(() => {
-    // Fetch WordPress posts
     const fetchPosts = async () => {
       try {
         const response = await axios.get('https://nobelweeklights.se/wp-json/wp/v2/installation?categories=55&_fields[]=artwork_name&_fields[]=artwork_description&_fields[]=location&_fields[]=location_lat&_fields[]=location_longitude&_fields[]=artwork_photo&_fields[]=artist_name&per_page=17');
         setPosts(response.data);
         
-        // Transform posts into marker objects
         const transformedMarkers = response.data.map(post => ({
           title: post.artwork_name,
           picture: post.artwork_photo,
@@ -64,8 +56,8 @@ export default function LightMap() {
           artist: post.artist_name,
           location: post.location,
           coordinate: {
-            latitude: parseFloat(post.location_lat), // Assuming location_lat is a string representing latitude
-            longitude: parseFloat(post.location_longitude), // Assuming artwork_long is a string representing longitude
+            latitude: parseFloat(post.location_lat),
+            longitude: parseFloat(post.location_longitude),
           },
         }));
         
@@ -83,7 +75,7 @@ export default function LightMap() {
   };
 
   const readMore = () => {
-    setReadMore(!isReadMore)
+    setReadMore(!isReadMore);
   };
 
   useEffect(() => {
@@ -91,18 +83,18 @@ export default function LightMap() {
       Animated.timing(
         translateY,
         {
-          toValue: 20, // Final position where you want it to appear from the bottom
-          duration: 250, // Duration of the animation in milliseconds
-          useNativeDriver: true // This improves animation performance
+          toValue: 20,
+          duration: 250,
+          useNativeDriver: true,
         }
       ).start();
     } else {
       Animated.timing(
         translateY,
         {
-          toValue: 300, // Return to initial position below the screen
-          duration: 150, // Duration of the animation in milliseconds
-          useNativeDriver: true // This improves animation performance
+          toValue: 300,
+          duration: 150,
+          useNativeDriver: true,
         }
       ).start();
     }
@@ -117,6 +109,7 @@ export default function LightMap() {
     toggleVisibility();
     setTimeout(() => {
       setSelectedMarker(null);
+      setReadMore(false)
     }, 200);
   };
 
@@ -143,38 +136,23 @@ export default function LightMap() {
         style={styles.map}
         showsUserLocation={true} 
         initialRegion={{
-          latitude: 59.3293, 
-          longitude: 18.0686, 
-          latitudeDelta: 0.1, 
-          longitudeDelta: 0.1, 
+          latitude: 59.3293,
+          longitude: 18.0686,
+          latitudeDelta: 0.1,
+          longitudeDelta: 0.1,
         }}
       >
         {markers.map((marker, index) => (
           <Marker
             key={index}
             coordinate={marker.coordinate}
-            // title={marker.title}
-            // description={marker.title}
             image={require('../img/Pin_Update_2x.png')}
             onPress={() => handleMarkerPress(marker)}
-            calloutAnchor={{ x: 0.5, y: 0.5 }} // Adjust the callout position if needed
-            calloutStyle={styles.calloutContainer} // Apply custom styling to the callout container
-            calloutTextStyle={styles.calloutText} // Apply custom styling to the callout text
+            calloutAnchor={{ x: 0.5, y: 0.5 }}
+            calloutStyle={styles.calloutContainer}
+            calloutTextStyle={styles.calloutText}
           />
         ))}
-        {/* {userLocation && (
-          <Marker
-            coordinate={userLocation}
-            title="Your Location"
-            description="You are here"
-          >
-             <Callout tooltip>
-          <View style={styles.calloutContainer}>
-            <Text style={styles.calloutText}>You are here</Text>
-          </View>
-        </Callout>
-          </Marker>
-        )} */}
         {lineCoordinates.length > 0 && (
           <Polyline
             coordinates={lineCoordinates}
@@ -188,7 +166,6 @@ export default function LightMap() {
           <TextInput
             style={styles.textInput}
             placeholder="Type here..."
-            // Add any additional props or event handlers as needed
           />
         </View>
       )}
@@ -197,55 +174,47 @@ export default function LightMap() {
           styles.selectedMarkerContainer,
           { transform: [{ translateY }] }
         ]}>
-         <TouchableOpacity style={isReadMore ? styles.readMoreContainer : styles.columnContainer}>
+          <View activeOpacity={1} style={isReadMore ? styles.readMoreContainer : styles.columnContainer}>
             <ImageBackground
               source={{ uri: selectedMarker.picture }}
               style={styles.columnContainerPicture}
               resizeMode="cover"
             >
-              <TouchableOpacity  style={styles.pictureContainerElements}>
+              <View activeOpacity={1} style={styles.pictureContainerElements}>
                 <Text style={styles.selectedMarkerTitle}>
-                  {`${selectedMarker.title}`}
+                  {selectedMarker.title}
                 </Text>
                 <Text style={styles.selectedMarkerText}>
-                  {`${selectedMarker.artist}`}
+                  {selectedMarker.artist}
                 </Text>
                 <Text style={styles.selectedMarkerText}>
-                  {`${selectedMarker.location}`}
+                  {selectedMarker.location}
                 </Text>
-              </TouchableOpacity>
+              </View>
             </ImageBackground>
 
             {isReadMore ? (
               <View style={styles.readMoreDescriptionContainer}>
-            
-              <HTML
-                contentWidth={windowWidth}
-                source={{ 
-                  html: `<div style="color: white; min-height: 250px; max-height: 250px; overflow: hidden;">${selectedMarker.description}</div>` 
-                }}
-                tagsStyles={{ p: { margin: 5, padding: 5 } }}
-              />
-
-      
-            </View>
-            ): (
-             <View style={styles.descriptionContainer}>
-            
-              <HTML
-                contentWidth={windowWidth}
-                source={{ 
-                  html: `<div style="color: white; min-height: 50px; max-height: 50px; overflow: hidden;">${selectedMarker.description}</div>` 
-                }}
-                tagsStyles={{ p: { margin: 0, padding: 0 } }}
-              />
-
-      
-            </View> 
+                <ScrollView contentContainerStyle={styles.scrollContent}>
+                  <HTML
+                    contentWidth={windowWidth}
+                    source={{ html: `<div style="color: white;">${selectedMarker.description}</div>` }}
+                    tagsStyles={{ p: { margin: 5, padding: 5 } }}
+                  />
+                </ScrollView>
+              </View>
+            ) : (
+              <View style={styles.descriptionContainer}>
+                <ScrollView contentContainerStyle={styles.scrollContent}>
+                  <HTML
+                    contentWidth={windowWidth}
+                    source={{ html: `<div style="color: white;">${selectedMarker.description}</div>` }}
+                    tagsStyles={{ p: { margin: 5, padding: 5 } }}
+                  />
+                </ScrollView>
+              </View>
             )}
-             
-            
-          </TouchableOpacity>
+          </View>
           <TouchableOpacity onPress={readMore} style={styles.readMoreButton}>
             <Text style={styles.closeButtonText}>Read More</Text>
           </TouchableOpacity>
