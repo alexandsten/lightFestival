@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, TextInput, Text, StyleSheet, TouchableOpacity, useWindowDimensions, Platform, Linking, ScrollView } from 'react-native';
+import { View, TextInput, Text, StyleSheet, TouchableOpacity, useWindowDimensions, Platform, Linking, ScrollView, Image } from 'react-native';
 import MapView, { Marker, Polyline } from 'react-native-maps';
 import { Animated } from 'react-native';
 import axios from 'axios';
@@ -7,6 +7,8 @@ import { styles } from './styles';
 import { ImageBackground } from 'react-native';
 import * as Location from 'expo-location'; 
 import HTML from 'react-native-render-html';
+import Logo from '../img/LOGO_2_ROW.png';
+import Burger from '../img/hamburger-menu.png';
 
 export default function LightMap() {
   const [selectedMarker, setSelectedMarker] = useState(null);
@@ -162,12 +164,12 @@ export default function LightMap() {
         )}
       </MapView>
       {!selectedMarker && (
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.textInput}
-            placeholder="Type here..."
-          />
+      <View style={styles.bottomMenuContainer}>
+        <View style={styles.bottomMenu}>
+          <Image source={Logo} style={styles.logo} />
+          <Image source={Burger} style={styles.burger} />
         </View>
+      </View>
       )}
       {selectedMarker && (
         <Animated.View style={[
@@ -219,7 +221,7 @@ export default function LightMap() {
             <Text style={styles.closeButtonText}>Read More</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={handleOpenMapForDirections} style={styles.lineButton}>
-            <Text style={styles.lineText}>Find way</Text>
+            <Text style={styles.lineText}>Directions</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={handleCloseButtonPress} style={styles.closeButton}>
             <Text style={styles.closeButtonText}>X</Text>

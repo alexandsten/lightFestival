@@ -10,22 +10,29 @@ export const styles = StyleSheet.create({
   map: {
     ...StyleSheet.absoluteFillObject,
   },
-  inputContainer: {
+  bottomMenuContainer: {
     position: 'absolute',
     bottom: 20,
     left: 20,
     right: 20,
-    backgroundColor: 'rgba(28, 27, 31, 0.55)',
-    borderRadius: 15,
+    backgroundColor: 'rgba(28, 27, 31, 0.75)',
+    borderRadius: 24,
     zIndex: 1,
-  },
-  textInput: {
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
     paddingLeft: 10,
-    color: 'white',
-    borderRadius: 15,
+    maxHeight: 50
+  },
+  logo: {
+    width: 100, 
+    height: 100, 
+    resizeMode: 'contain', 
+    marginTop: -23
+  },
+  burger: {
+    width: 30, 
+    height: 30, 
+    marginLeft: 'auto',
+    marginRight: 20, 
+    marginTop: -23
   },
   selectedMarkerContainer: {
     position: 'absolute',
@@ -38,6 +45,11 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
     zIndex: 1,
   },
+  bottomMenu: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flex: 1,
+  },
   selectedMarkerTitle: {
     color: 'white',
     fontSize: 22,
@@ -48,11 +60,11 @@ export const styles = StyleSheet.create({
   },
   closeButton: {
     position: 'absolute',
-    bottom: 20,
-    right: 15,
-    padding: 6,
+    bottom: 18,
+    right: 22,
+    padding: 8,
     backgroundColor: 'black',
-    borderRadius: 24,
+    borderRadius: 50,
     width: 54,
     justifyContent: 'center',
     alignItems: 'center',
@@ -61,7 +73,7 @@ export const styles = StyleSheet.create({
   readMoreButton: {
     position: 'absolute',
     bottom: 20,
-    right: 205,
+    right: 195,
     padding: 6,
     backgroundColor: 'rgba(204, 51, 102, 0.75)',
     borderRadius: 24,
@@ -73,7 +85,7 @@ export const styles = StyleSheet.create({
   lineButton: {
     position: 'absolute',
     bottom: 20,
-    right: 90,
+    right: 85.5,
     padding: 6,
     backgroundColor: 'white',
     borderRadius: 24,
@@ -96,7 +108,7 @@ export const styles = StyleSheet.create({
     maxHeight: 540,
     overflow: 'hidden',
     backgroundColor: 'rgba(28, 27, 31, 0.9)',
-    borderRadius: 30,
+    borderRadius: 30
   },
   readMoreContainer: {
     flex: 1,
@@ -131,7 +143,7 @@ export const styles = StyleSheet.create({
     zIndex: 1,
   },
   pictureContainerElements: {
-    marginLeft: 50,
+    marginLeft: 30,
   },
   descriptionContainer: {
     flex: 1,
@@ -154,6 +166,7 @@ export const styles = StyleSheet.create({
     marginLeft: 8,
     marginBottom: 55,
     zIndex: 1,
+    marginTop: -15
   },
   scrollContent: {
     flexGrow: 1,
