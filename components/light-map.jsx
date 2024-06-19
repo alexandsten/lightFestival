@@ -9,6 +9,8 @@ import * as Location from 'expo-location';
 import HTML from 'react-native-render-html';
 import Logo from '../img/LOGO_2_ROW.png';
 import Burger from '../img/hamburger-menu.png';
+import * as Font from 'expo-font';
+
 
 export default function LightMap() {
   const [selectedMarker, setSelectedMarker] = useState(null);
@@ -22,6 +24,15 @@ export default function LightMap() {
   const [userLocation, setUserLocation] = useState(null);
   const [markers, setMarkers] = useState([]);
   const [lineCoordinates, setLineCoordinates] = useState([]);
+
+  useEffect(() => {
+    async function loadFonts() {
+      await Font.loadAsync({
+        'AlfredSans-Regular': require('../assets/fonts/AlfredSans-Regular.ttf'),
+      });
+    }
+    loadFonts();
+  }, []);
 
   useEffect(() => {
     const getUserLocation = async () => {
@@ -200,7 +211,7 @@ export default function LightMap() {
                 <ScrollView contentContainerStyle={styles.scrollContent}>
                   <HTML
                     contentWidth={windowWidth}
-                    source={{ html: `<div style="color: white;">${selectedMarker.description}</div>` }}
+                    source={{ html: `<div style="color: white; font-family: 'AlfredSans-Regular'; ">${selectedMarker.description}</div>` }}
                     tagsStyles={{ p: { margin: 5, padding: 5 } }}
                   />
                 </ScrollView>

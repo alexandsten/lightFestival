@@ -57,6 +57,7 @@ export const styles = StyleSheet.create({
   selectedMarkerText: {
     color: 'white',
     fontSize: 16,
+    fontFamily: 'AlfredSans-Regular',
   },
   closeButton: {
     position: 'absolute',
@@ -69,6 +70,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     zIndex: 1,
+    fontFamily: 'AlfredSans-Regular',
   },
   readMoreButton: {
     position: 'absolute',
@@ -86,7 +88,7 @@ export const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 20,
     right: 85.5,
-    padding: 6,
+    padding: 7.5,
     backgroundColor: 'white',
     borderRadius: 24,
     width: 100,
@@ -99,6 +101,7 @@ export const styles = StyleSheet.create({
   },
   lineText: {
     color: 'black',
+    fontFamily: 'AlfredSans-Regular',
   },
   columnContainer: {
     flex: 1,
@@ -128,6 +131,7 @@ export const styles = StyleSheet.create({
   calloutText: {
     color: 'black',
     fontSize: 16,
+    fontFamily: 'AlfredSans',
   },
   columnContainerPicture: {
     flexDirection: 'column',
