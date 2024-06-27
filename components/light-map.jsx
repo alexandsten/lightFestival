@@ -10,6 +10,11 @@ import HTML from 'react-native-render-html';
 import Logo from '../img/LOGO_2_ROW.png';
 import Burger from '../img/hamburger-menu.png';
 import * as Font from 'expo-font';
+import { LinearGradient } from 'expo-linear-gradient';
+
+Font.loadAsync({
+  'AlfredSans-Regular': require('../assets/fonts/AlfredSans-Regular.ttf'),
+});
 
 
 export default function LightMap() {
@@ -23,6 +28,7 @@ export default function LightMap() {
   const [posts, setPosts] = useState([]);
   const [userLocation, setUserLocation] = useState(null);
   const [markers, setMarkers] = useState([]);
+  const [eventMarkers, setEventMarkers] = useState([]);
   const [lineCoordinates, setLineCoordinates] = useState([]);
 
   useEffect(() => {
@@ -188,12 +194,18 @@ export default function LightMap() {
           { transform: [{ translateY }] }
         ]}>
           <View activeOpacity={1} style={isReadMore ? styles.readMoreContainer : styles.columnContainer}>
+            
             <ImageBackground
               source={{ uri: selectedMarker.picture }}
               style={styles.columnContainerPicture}
               resizeMode="cover"
             >
+              <LinearGradient
+                  colors={['transparent', 'black']}
+                  style={StyleSheet.absoluteFill}
+                />
               <View activeOpacity={1} style={styles.pictureContainerElements}>
+                
                 <Text style={styles.selectedMarkerTitle}>
                   {selectedMarker.title}
                 </Text>
@@ -212,7 +224,7 @@ export default function LightMap() {
                   <HTML
                     contentWidth={windowWidth}
                     source={{ html: `<div style="color: white; font-family: 'AlfredSans-Regular'; ">${selectedMarker.description}</div>` }}
-                    tagsStyles={{ p: { margin: 5, padding: 5 } }}
+                    tagsStyles={{ p: { margin: 5, padding: 5, marginTop: 0, paddingTop: 0 } }}
                   />
                 </ScrollView>
               </View>
@@ -222,7 +234,7 @@ export default function LightMap() {
                   <HTML
                     contentWidth={windowWidth}
                     source={{ html: `<div style="color: white;">${selectedMarker.description}</div>` }}
-                    tagsStyles={{ p: { margin: 5, padding: 5 } }}
+                    tagsStyles={{ p: { margin: 5, padding: 5, marginTop: 0, paddingTop: 0 } }}
                   />
                 </ScrollView>
               </View>

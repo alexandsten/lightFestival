@@ -25,7 +25,8 @@
     "react-native-maps": "1.14.0",
     "react-native-modal": "^13.0.1",
     "react-native-render-html": "^6.3.4",
-    "react-native-web": "~0.19.6"
+    "react-native-web": "~0.19.6",
+    "expo-linear-gradient": "~13.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

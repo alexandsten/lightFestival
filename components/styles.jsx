@@ -63,7 +63,7 @@ export const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 18,
     right: 22,
-    padding: 8,
+    padding: 8.5,
     backgroundColor: 'black',
     borderRadius: 50,
     width: 54,
@@ -76,7 +76,7 @@ export const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 20,
     right: 195,
-    padding: 6,
+    padding: 7.5,
     backgroundColor: 'rgba(204, 51, 102, 0.75)',
     borderRadius: 24,
     width: 130,
@@ -98,6 +98,7 @@ export const styles = StyleSheet.create({
   },
   closeButtonText: {
     color: 'white',
+    fontFamily: 'AlfredSans-Regular',
   },
   lineText: {
     color: 'black',
@@ -133,7 +134,7 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: 'AlfredSans',
   },
-  columnContainerPicture: {
+ columnContainerPicture: {
     flexDirection: 'column',
     justifyContent: 'flex-end',
     alignItems: 'flex-start',
@@ -158,7 +159,7 @@ export const styles = StyleSheet.create({
     overflow: 'hidden',
     marginLeft: 8,
     marginBottom: 55,
-    zIndex: 1,
+    zIndex: 1
   },
   readMoreDescriptionContainer: {
     flex: 1,
@@ -169,8 +170,7 @@ export const styles = StyleSheet.create({
     overflow: 'scroll',
     marginLeft: 8,
     marginBottom: 55,
-    zIndex: 1,
-    marginTop: -15
+    zIndex: 1
   },
   scrollContent: {
     flexGrow: 1,
