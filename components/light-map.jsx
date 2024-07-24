@@ -25,7 +25,8 @@ export default function LightMap() {
   const windowWidth = useWindowDimensions().width;
   const windowHeight = useWindowDimensions().height;
 
-  const [posts, setPosts] = useState([]);
+  const [artworks, setArtworks] = useState([]);
+  const [events, setEvents] = useState([]);
   const [userLocation, setUserLocation] = useState(null);
   const [markers, setMarkers] = useState([]);
   const [eventMarkers, setEventMarkers] = useState([]);
@@ -63,30 +64,53 @@ export default function LightMap() {
   }, []);
 
   useEffect(() => {
-    const fetchPosts = async () => {
+    const fetchArtworks = async () => {
       try {
         const response = await axios.get('https://nobelweeklights.se/wp-json/wp/v2/installation?categories=55&_fields[]=artwork_name&_fields[]=artwork_description&_fields[]=location&_fields[]=location_lat&_fields[]=location_longitude&_fields[]=artwork_photo&_fields[]=artist_name&per_page=17');
-        setPosts(response.data);
+        setArtworks(response.data);
         
-        const transformedMarkers = response.data.map(post => ({
-          title: post.artwork_name,
-          picture: post.artwork_photo,
-          description: post.artwork_description,
-          artist: post.artist_name,
-          location: post.location,
+        const transformedMarkers = response.data.map(artworks => ({
+          title: artworks.artwork_name,
+          picture: artworks.artwork_photo,
+          description: artworks.artwork_description,
+          artist: artworks.artist_name,
+          location: artworks.location,
           coordinate: {
-            latitude: parseFloat(post.location_lat),
-            longitude: parseFloat(post.location_longitude),
+            latitude: parseFloat(artworks.location_lat),
+            longitude: parseFloat(artworks.location_longitude),
           },
         }));
         
         setMarkers(transformedMarkers);
       } catch (error) {
-        console.error('Error fetching WordPress posts:', error);
+        console.error('Error fetching WordPress artworkss:', error);
       }
     };
 
-    fetchPosts();
+    const fetchEvents = async () => {
+      try {
+        const response = await axios.get('https://nobelweeklights.se/wp-json/wp/v2/events_map?categories=64&_fields[]=event_name&_fields[]=event_description&_fields[]=event_image&_fields[]=event_time&_fields[]=event_location&_fields[]=location_lat&_fields[]=location_long');
+        setEvents(response.data);
+        
+        const transformedMarkers = response.data.map(event => ({
+          title: event.event_name,
+          picture: event.event_image.guid,
+          description: event.event_description,
+          artist: event.event_time,
+          location: event.event_location,
+          coordinate: {
+            latitude: parseFloat(event.location_lat),
+            longitude: parseFloat(event.location_long),
+          },
+        }));
+        
+        setEventMarkers(transformedMarkers);
+      } catch (error) {
+        console.error('Error fetching WordPress posts:', error);
+      }
+    }
+    fetchArtworks();
+    fetchEvents();
   }, []);
 
   const toggleVisibility = () => {
@@ -172,6 +196,17 @@ export default function LightMap() {
             calloutTextStyle={styles.calloutText}
           />
         ))}
+         {eventMarkers.map((marker, index) => (
+          <Marker
+            key={index}
+            coordinate={marker.coordinate}
+            image={require('../img/marker2.png')}
+            onPress={() => handleMarkerPress(marker)}
+            calloutAnchor={{ x: 0.5, y: 0.5 }}
+            calloutStyle={styles.calloutContainer}
+            calloutTextStyle={styles.calloutText}
+          />
+        ))} 
         {lineCoordinates.length > 0 && (
           <Polyline
             coordinates={lineCoordinates}
