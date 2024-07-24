@@ -22,6 +22,7 @@ export default function LightMap() {
   const [isVisible, setIsVisible] = useState(false);
   const [isReadMore, setReadMore] = useState(false);
   const [menuDrawer, setMenuDrawer] = useState(false);
+  const [isDrawerVisible, setDrawerIsVisible] = useState(false);
   const translateY = useRef(new Animated.Value(300)).current;
   const windowWidth = useWindowDimensions().width;
   const windowHeight = useWindowDimensions().height;
@@ -120,6 +121,13 @@ export default function LightMap() {
 
   const toggleMenuDrawer = () => {
       setMenuDrawer(!menuDrawer); 
+      if (!isDrawerVisible) {
+        setDrawerIsVisible(true)
+      } else {
+        setTimeout(() => {
+          setDrawerIsVisible(false)
+        }, 200);
+      }
   };
 
   const readMore = () => {
@@ -231,7 +239,7 @@ export default function LightMap() {
         </View>
       </View>
       )}
-      {menuDrawer && (
+      {isDrawerVisible && (
         <Animated.View style={[
           styles.menuContainer,
           { transform: [{ translateY }] }
