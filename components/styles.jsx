@@ -34,6 +34,9 @@ export const styles = StyleSheet.create({
     marginRight: 20, 
     marginTop: -23
   },
+  touchableBurger: {
+    marginLeft: '50%'
+  },
   selectedMarkerContainer: {
     position: 'absolute',
     bottom: 40,
@@ -42,6 +45,21 @@ export const styles = StyleSheet.create({
     borderRadius: 30,
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
+    zIndex: 1,
+  },
+  menuContainer: {
+    position: 'absolute',
+    padding: 20,
+    bottom: 110,
+    left: 20,
+    right: 20,
+    backgroundColor: 'rgba(28, 27, 31, 0.9)',
+    borderRadius: 30,
+    minHeight: '80%',
+    flexDirection: 'row',
+    alignItems: 'top',
+    justifyContent: 'center',
     justifyContent: 'space-between',
     zIndex: 1,
   },

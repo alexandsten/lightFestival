@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, TextInput, Text, StyleSheet, TouchableOpacity, useWindowDimensions, Platform, Linking, ScrollView, Image } from 'react-native';
+import { View, TextInput, Text, StyleSheet, TouchableOpacity, useWindowDimensions, Platform, Linking, ScrollView, Image, Pressable } from 'react-native';
 import MapView, { Marker, Polyline } from 'react-native-maps';
 import { Animated } from 'react-native';
 import axios from 'axios';
@@ -21,10 +21,11 @@ export default function LightMap() {
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [isVisible, setIsVisible] = useState(false);
   const [isReadMore, setReadMore] = useState(false);
+  const [menuDrawer, setMenuDrawer] = useState(false);
   const translateY = useRef(new Animated.Value(300)).current;
   const windowWidth = useWindowDimensions().width;
   const windowHeight = useWindowDimensions().height;
-
+  const timerRef = useRef(null);
   const [artworks, setArtworks] = useState([]);
   const [events, setEvents] = useState([]);
   const [userLocation, setUserLocation] = useState(null);
@@ -117,31 +118,36 @@ export default function LightMap() {
     setIsVisible(!isVisible);
   };
 
+  const toggleMenuDrawer = () => {
+      setMenuDrawer(!menuDrawer); 
+  };
+
   const readMore = () => {
     setReadMore(!isReadMore);
   };
 
   useEffect(() => {
-    if (isVisible) {
-      Animated.timing(
-        translateY,
-        {
-          toValue: 20,
-          duration: 250,
-          useNativeDriver: true,
-        }
-      ).start();
+    let toValue;
+    let duration;
+
+    if (menuDrawer) {
+      toValue = 30;
+      duration = 200;
+    } else if (isVisible) {
+      toValue = 20;
+      duration = 250;
     } else {
-      Animated.timing(
-        translateY,
-        {
-          toValue: 300,
-          duration: 150,
-          useNativeDriver: true,
-        }
-      ).start();
+      toValue = 300;
+      duration = 150;
     }
-  }, [isVisible]);
+
+    Animated.timing(translateY, {
+      toValue,
+      duration,
+      useNativeDriver: true,
+    }).start();
+  }, [isVisible, menuDrawer]);
+
 
   const handleMarkerPress = (marker) => {
     setSelectedMarker(marker);
@@ -219,9 +225,23 @@ export default function LightMap() {
       <View style={styles.bottomMenuContainer}>
         <View style={styles.bottomMenu}>
           <Image source={Logo} style={styles.logo} />
-          <Image source={Burger} style={styles.burger} />
+          <TouchableOpacity onPress={toggleMenuDrawer} style={styles.touchableBurger}>
+            <Image source={Burger} style={styles.burger} />
+          </TouchableOpacity>
         </View>
       </View>
+      )}
+      {menuDrawer && (
+        <Animated.View style={[
+          styles.menuContainer,
+          { transform: [{ translateY }] }
+        ]}>
+         
+            <Text style={styles.selectedMarkerText}>
+              FAQ
+            </Text>
+         
+        </Animated.View>
       )}
       {selectedMarker && (
         <Animated.View style={[
