@@ -102,6 +102,16 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     zIndex: 1,
   },
+  bookingButton: {
+    // padding: 3,
+    flex: 0.5,
+    backgroundColor: 'rgba(204, 51, 102, 0.75)',
+    borderRadius: 24,
+    width: 130,
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 1,
+  },
   lineButton: {
     position: 'absolute',
     bottom: 20,
@@ -188,6 +198,15 @@ export const styles = StyleSheet.create({
     overflow: 'scroll',
     marginLeft: 8,
     marginBottom: 55,
+    zIndex: 1
+  },
+  bookingContainer: {
+    flex: 0.20,
+    padding: 1,
+    justifyContent: 'flex-start',
+    color: 'white',
+    overflow: 'scroll',
+    height: 5,
     zIndex: 1
   },
   scrollContent: {

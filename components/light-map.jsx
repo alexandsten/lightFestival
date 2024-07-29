@@ -80,7 +80,9 @@ export default function LightMap() {
           coordinate: {
             latitude: parseFloat(artworks.location_lat),
             longitude: parseFloat(artworks.location_longitude),
-          },
+          }
+          ,
+          isEvent: false
         }));
         
         setMarkers(transformedMarkers);
@@ -104,6 +106,7 @@ export default function LightMap() {
             latitude: parseFloat(event.location_lat),
             longitude: parseFloat(event.location_long),
           },
+          isEvent: true
         }));
         
         setEventMarkers(transformedMarkers);
@@ -268,7 +271,6 @@ export default function LightMap() {
                   style={StyleSheet.absoluteFill}
                 />
               <View activeOpacity={1} style={styles.pictureContainerElements}>
-                
                 <Text style={styles.selectedMarkerTitle}>
                   {selectedMarker.title}
                 </Text>
@@ -280,9 +282,17 @@ export default function LightMap() {
                 </Text>
               </View>
             </ImageBackground>
-
+            { selectedMarker.isEvent && isReadMore && (
+                <View style={styles.bookingContainer}>
+                  <TouchableOpacity onPress={readMore} style={styles.bookingButton}>
+                    <Text style={styles.selectedMarkerText}>Book now</Text>
+                  </TouchableOpacity>
+                </View>        
+                )
+            }
             {isReadMore ? (
               <View style={styles.readMoreDescriptionContainer}>
+               
                 <ScrollView contentContainerStyle={styles.scrollContent}>
                   <HTML
                     contentWidth={windowWidth}
@@ -293,7 +303,15 @@ export default function LightMap() {
               </View>
             ) : (
               <View style={styles.descriptionContainer}>
+                {/* {
+                  selectedMarker.isEvent && (
+                    <TouchableOpacity style={styles.bookingButton} onPress={readMore} >
+                      <Text style={styles.selectedMarkerText}>Book now</Text>
+                    </TouchableOpacity>
+                  )
+                } */}
                 <ScrollView contentContainerStyle={styles.scrollContent}>
+                  
                   <HTML
                     contentWidth={windowWidth}
                     source={{ html: `<div style="color: white;">${selectedMarker.description}</div>` }}
@@ -303,6 +321,7 @@ export default function LightMap() {
               </View>
             )}
           </View>
+          
           <TouchableOpacity onPress={readMore} style={styles.readMoreButton}>
             <Text style={styles.closeButtonText}>Read More</Text>
           </TouchableOpacity>
