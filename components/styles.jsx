@@ -103,8 +103,7 @@ export const styles = StyleSheet.create({
     zIndex: 1,
   },
   bookingButton: {
-    // padding: 3,
-    flex: 0.5,
+    padding: 10,
     backgroundColor: 'rgba(204, 51, 102, 0.75)',
     borderRadius: 24,
     width: 130,
@@ -201,7 +200,7 @@ export const styles = StyleSheet.create({
     zIndex: 1
   },
   bookingContainer: {
-    flex: 0.20,
+    flex: 0.15,
     padding: 1,
     justifyContent: 'flex-start',
     color: 'white',

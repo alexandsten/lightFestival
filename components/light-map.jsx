@@ -281,6 +281,7 @@ export default function LightMap() {
                   {selectedMarker.location}
                 </Text>
               </View>
+              
             </ImageBackground>
             { selectedMarker.isEvent && isReadMore && (
                 <View style={styles.bookingContainer}>
@@ -323,7 +324,7 @@ export default function LightMap() {
           </View>
           
           <TouchableOpacity onPress={readMore} style={styles.readMoreButton}>
-            <Text style={styles.closeButtonText}>Read More</Text>
+            <Text style={styles.closeButtonText}>Expand</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={handleOpenMapForDirections} style={styles.lineButton}>
             <Text style={styles.lineText}>Directions</Text>
