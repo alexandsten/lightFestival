@@ -43,6 +43,10 @@ export default function LightMap() {
     loadFonts();
   }, []);
 
+  const openBooking = () => {
+    Linking.openURL('https://nobelweeklights.se/?lang=en');
+  };
+
   useEffect(() => {
     const getUserLocation = async () => {
       try {
@@ -198,8 +202,8 @@ export default function LightMap() {
         initialRegion={{
           latitude: 59.3293,
           longitude: 18.0686,
-          latitudeDelta: 0.1,
-          longitudeDelta: 0.1,
+          latitudeDelta: 0.03,
+          longitudeDelta: 0.03,
         }}
       >
         {markers.map((marker, index) => (
@@ -285,7 +289,7 @@ export default function LightMap() {
             </ImageBackground>
             { selectedMarker.isEvent && isReadMore && (
                 <View style={styles.bookingContainer}>
-                  <TouchableOpacity onPress={readMore} style={styles.bookingButton}>
+                  <TouchableOpacity onPress={openBooking} style={styles.bookingButton}>
                     <Text style={styles.selectedMarkerText}>Book now</Text>
                   </TouchableOpacity>
                 </View>        
