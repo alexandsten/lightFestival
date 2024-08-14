@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { View, TextInput, Text, StyleSheet, TouchableOpacity, useWindowDimensions, Platform, Linking, ScrollView, Image, Pressable, FlatList } from 'react-native';
-import MapView, { Marker, Polyline } from 'react-native-maps';
+import MapView, { Marker, Polyline, UrlTile } from 'react-native-maps';
 import { Animated } from 'react-native';
 import axios from 'axios';
 import { styles } from './styles';
@@ -208,7 +208,12 @@ export default function LightMap() {
           latitudeDelta: 0.03,
           longitudeDelta: 0.03,
         }}
-      >
+        mapType="none" 
+      >  
+          <UrlTile
+            urlTemplate="https://a.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png"
+            maximumZ={19}
+          />
         {markers.map((marker, index) => (
           <Marker
             key={index}
