@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, TextInput, Text, StyleSheet, TouchableOpacity, useWindowDimensions, Platform, Linking, ScrollView, Image, Pressable } from 'react-native';
+import { View, TextInput, Text, StyleSheet, TouchableOpacity, useWindowDimensions, Platform, Linking, ScrollView, Image, Pressable, FlatList } from 'react-native';
 import MapView, { Marker, Polyline } from 'react-native-maps';
 import { Animated } from 'react-native';
 import axios from 'axios';
@@ -33,6 +33,9 @@ export default function LightMap() {
   const [markers, setMarkers] = useState([]);
   const [eventMarkers, setEventMarkers] = useState([]);
   const [lineCoordinates, setLineCoordinates] = useState([]);
+
+  const dummyItems = ['NOBEL ITEM 1', 'NOBEL ITEM 2', 'NOBEL ITEM 3', 'NOBEL ITEM 4', 'NOBEL ITEM 5'];
+
 
   useEffect(() => {
     async function loadFonts() {
@@ -236,7 +239,7 @@ export default function LightMap() {
           />
         )}
       </MapView>
-      {!selectedMarker && (
+      {!selectedMarker && !isDrawerVisible && (
       <View style={styles.bottomMenuContainer}>
         <View style={styles.bottomMenu}>
           <Image source={Logo} style={styles.logo} />
@@ -248,13 +251,20 @@ export default function LightMap() {
       )}
       {isDrawerVisible && (
         <Animated.View style={[
-          styles.menuContainer,
-          { transform: [{ translateY }] }
+          styles.menuContainer
         ]}>
-         
-            <Text style={styles.selectedMarkerText}>
-              FAQ
-            </Text>
+         {/* ,
+         { transform: [{ translateY }] } */}
+             {dummyItems.map((item, index) => (
+              <TouchableOpacity onPress={toggleMenuDrawer} style={styles.menuContainerListItem}>
+                <Text key={index} style={styles.openDrawerText}>
+                  {item}
+                </Text>
+              </TouchableOpacity>
+            ))}
+            <TouchableOpacity onPress={toggleMenuDrawer} style={styles.closeDrawerButton}>
+              <Text style={styles.closeButtonTextLarge}>X</Text>
+            </TouchableOpacity>
          
         </Animated.View>
       )}

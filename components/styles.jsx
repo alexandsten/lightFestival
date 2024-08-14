@@ -21,6 +21,7 @@ export const styles = StyleSheet.create({
     paddingLeft: 10,
     maxHeight: 50
   },
+
   logo: {
     width: 100, 
     height: 100, 
@@ -50,18 +51,22 @@ export const styles = StyleSheet.create({
   },
   menuContainer: {
     position: 'absolute',
-    padding: 20,
-    bottom: 110,
-    left: 20,
-    right: 20,
-    backgroundColor: 'rgba(28, 27, 31, 0.9)',
-    borderRadius: 30,
-    minHeight: '80%',
+    padding: '10%',
+    // bottom: '10%',
+    // left: 20,
+    // right: 20,
+    backgroundColor: 'black',
+    // borderRadius: 30,
+    minHeight: '100%',
+    minWidth: '100%',
     flexDirection: 'row',
     alignItems: 'top',
     justifyContent: 'center',
-    justifyContent: 'space-between',
-    zIndex: 1,
+    flexDirection: 'column',
+    zIndex: 0,
+  },
+  menuContainerListItem: {
+    marginTop: 30
   },
   bottomMenu: {
     flexDirection: 'row',
@@ -77,7 +82,26 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: 'AlfredSans-Regular',
   },
+  openDrawerText: {
+    color: 'white',
+    fontSize: 32,
+    fontFamily: 'AlfredSans-Regular',
+    fontWeight: 'bold'
+  },
   closeButton: {
+    position: 'absolute',
+    bottom: 18,
+    right: 22,
+    padding: 8.5,
+    backgroundColor: 'black',
+    borderRadius: 50,
+    width: 54,
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 1,
+    fontFamily: 'AlfredSans-Regular',
+  },
+  closeDrawerButton: {
     position: 'absolute',
     bottom: 18,
     right: 22,
@@ -126,6 +150,11 @@ export const styles = StyleSheet.create({
   closeButtonText: {
     color: 'white',
     fontFamily: 'AlfredSans-Regular',
+  },
+  closeButtonTextLarge: {
+    color: 'white',
+    fontFamily: 'AlfredSans-Regular',
+    fontSize: 36
   },
   lineText: {
     color: 'black',
