@@ -1,16 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, TextInput, Text, StyleSheet, TouchableOpacity, useWindowDimensions, Platform, Linking, ScrollView, Image, Pressable, FlatList } from 'react-native';
+import { View, Text,  TouchableOpacity, useWindowDimensions, Platform, Linking,  Image, } from 'react-native';
 import MapView, { Marker, Polyline, UrlTile } from 'react-native-maps';
 import { Animated } from 'react-native';
 import axios from 'axios';
 import { styles } from './styles';
-import { ImageBackground } from 'react-native';
 import * as Location from 'expo-location'; 
-import HTML from 'react-native-render-html';
 import Logo from '../img/LOGO_2_ROW.png';
 import Burger from '../img/hamburger-menu.png';
 import * as Font from 'expo-font';
-import { LinearGradient } from 'expo-linear-gradient';
 import ArtWorkDrawer from './artwork-drawer';
 
 Font.loadAsync({
@@ -47,9 +44,6 @@ export default function LightMap() {
     loadFonts();
   }, []);
 
-  const openBooking = () => {
-    Linking.openURL('https://nobelweeklights.se/?lang=en');
-  };
 
   useEffect(() => {
     const getUserLocation = async () => {
@@ -141,10 +135,6 @@ export default function LightMap() {
       }
   };
 
-  const readMore = () => {
-    setReadMore(!isReadMore);
-  };
-
   useEffect(() => {
     let toValue;
     let duration;
@@ -179,22 +169,6 @@ export default function LightMap() {
       setSelectedMarker(null);
       setReadMore(false)
     }, 200);
-  };
-
-  const handleOpenMapForDirections = () => {
-    if (selectedMarker && userLocation) {
-      const userLatitude = userLocation.latitude;
-      const userLongitude = userLocation.longitude;
-      const markerLatitude = selectedMarker.coordinate.latitude;
-      const markerLongitude = selectedMarker.coordinate.longitude;
-
-      const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${userLatitude},${userLongitude}&destination=${markerLatitude},${markerLongitude}&travelmode=driving`;
-      const appleMapsUrl = `http://maps.apple.com/?saddr=${userLatitude},${userLongitude}&daddr=${markerLatitude},${markerLongitude}&dirflg=d`;
-
-      const url = Platform.OS === 'ios' ? appleMapsUrl : googleMapsUrl;
-      Linking.openURL(url);
-    }
-    handleCloseButtonPress();
   };
 
   return (

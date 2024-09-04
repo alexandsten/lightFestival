@@ -1,14 +1,9 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { View, TextInput, Text, StyleSheet, TouchableOpacity, useWindowDimensions, Platform, Linking, ScrollView, Image, Pressable, FlatList } from 'react-native';
-import MapView, { Marker, Polyline, UrlTile } from 'react-native-maps';
+import React, { useRef, useEffect } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, useWindowDimensions, Platform, Linking, ScrollView, } from 'react-native';
 import { Animated } from 'react-native';
-import axios from 'axios';
-import { styles } from './styles';
+import { styles } from './styles-drawer';
 import { ImageBackground } from 'react-native';
-import * as Location from 'expo-location'; 
 import HTML from 'react-native-render-html';
-import Logo from '../img/LOGO_2_ROW.png';
-import Burger from '../img/hamburger-menu.png';
 import * as Font from 'expo-font';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -18,15 +13,9 @@ Font.loadAsync({
 
 
 export default function ArtWorkDrawer({selectedMarker, setSelectedMarker, isVisible, isReadMore, setReadMore, menuDrawer,  userLocation , setIsVisible}) {
-//   const [selectedMarker, setSelectedMarker] = useState(null);
-//   const [isVisible, setIsVisible] = useState(false);
-//   const [isReadMore, setReadMore] = useState(false);
-//   const [menuDrawer, setMenuDrawer] = useState(false);
-//   const [isDrawerVisible, setDrawerIsVisible] = useState(false);
+
   const translateY = useRef(new Animated.Value(300)).current;
   const windowWidth = useWindowDimensions().width;
-
-
 
   useEffect(() => {
     async function loadFonts() {
@@ -68,11 +57,6 @@ export default function ArtWorkDrawer({selectedMarker, setSelectedMarker, isVisi
     }).start();
   }, [isVisible, menuDrawer]);
 
-
-//   const handleMarkerPress = (marker) => {
-//     setSelectedMarker(marker);
-//     setIsVisible(true);
-//   };
 const toggleVisibility = () => {
     setIsVisible(!isVisible);
   };
@@ -105,8 +89,6 @@ const toggleVisibility = () => {
 
   return (
     <>
-      
-     
       {selectedMarker && (        
         <Animated.View style={[
           styles.selectedMarkerContainer,
