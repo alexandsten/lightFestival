@@ -11,6 +11,7 @@ import Logo from '../img/LOGO_2_ROW.png';
 import Burger from '../img/hamburger-menu.png';
 import * as Font from 'expo-font';
 import { LinearGradient } from 'expo-linear-gradient';
+import ArtWorkDrawer from './artwork-drawer';
 
 Font.loadAsync({
   'AlfredSans-Regular': require('../assets/fonts/AlfredSans-Regular.ttf'),
@@ -244,7 +245,7 @@ export default function LightMap() {
           />
         )}
       </MapView>
-      {!selectedMarker && !isDrawerVisible && (
+      {!selectedMarker && !isDrawerVisible && (       
       <View style={styles.bottomMenuContainer}>
         <View style={styles.bottomMenu}>
           <Image source={Logo} style={styles.logo} />
@@ -273,86 +274,8 @@ export default function LightMap() {
          
         </Animated.View>
       )}
-      {selectedMarker && (
-        <Animated.View style={[
-          styles.selectedMarkerContainer,
-          { transform: [{ translateY }] }
-        ]}>
-          <View activeOpacity={1} style={isReadMore ? styles.readMoreContainer : styles.columnContainer}>
-            
-            <ImageBackground
-              source={{ uri: selectedMarker.picture }}
-              style={styles.columnContainerPicture}
-              resizeMode="cover"
-            >
-              <LinearGradient
-                  colors={['transparent', 'black']}
-                  style={StyleSheet.absoluteFill}
-                />
-              <View activeOpacity={1} style={styles.pictureContainerElements}>
-                <Text style={styles.selectedMarkerTitle}>
-                  {selectedMarker.title}
-                </Text>
-                <Text style={styles.selectedMarkerText}>
-                  {selectedMarker.artist}
-                </Text>
-                <Text style={styles.selectedMarkerText}>
-                  {selectedMarker.location}
-                </Text>
-              </View>
-              
-            </ImageBackground>
-            { selectedMarker.isEvent && isReadMore && (
-                <View style={styles.bookingContainer}>
-                  <TouchableOpacity onPress={openBooking} style={styles.bookingButton}>
-                    <Text style={styles.selectedMarkerText}>Book now</Text>
-                  </TouchableOpacity>
-                </View>        
-                )
-            }
-            {isReadMore ? (
-              <View style={styles.readMoreDescriptionContainer}>
-               
-                <ScrollView contentContainerStyle={styles.scrollContent}>
-                  <HTML
-                    contentWidth={windowWidth}
-                    source={{ html: `<div style="color: white; font-family: 'AlfredSans-Regular'; ">${selectedMarker.description}</div>` }}
-                    tagsStyles={{ p: { margin: 5, padding: 5, marginTop: 0, paddingTop: 0 } }}
-                  />
-                </ScrollView>
-              </View>
-            ) : (
-              <View style={styles.descriptionContainer}>
-                {/* {
-                  selectedMarker.isEvent && (
-                    <TouchableOpacity style={styles.bookingButton} onPress={readMore} >
-                      <Text style={styles.selectedMarkerText}>Book now</Text>
-                    </TouchableOpacity>
-                  )
-                } */}
-                <ScrollView contentContainerStyle={styles.scrollContent}>
-                  
-                  <HTML
-                    contentWidth={windowWidth}
-                    source={{ html: `<div style="color: white;">${selectedMarker.description}</div>` }}
-                    tagsStyles={{ p: { margin: 5, padding: 5, marginTop: 0, paddingTop: 0 } }}
-                  />
-                </ScrollView>
-              </View>
-            )}
-          </View>
-          
-          <TouchableOpacity onPress={readMore} style={styles.readMoreButton}>
-            <Text style={styles.closeButtonText}>Expand</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={handleOpenMapForDirections} style={styles.lineButton}>
-            <Text style={styles.lineText}>Directions</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={handleCloseButtonPress} style={styles.closeButton}>
-            <Text style={styles.closeButtonText}>X</Text>
-          </TouchableOpacity>
-        </Animated.View>
-      )}
+      <ArtWorkDrawer selectedMarker={selectedMarker} setSelectedMarker={setSelectedMarker} isVisible={isVisible} isReadMore={isReadMore} setReadMore={setReadMore} menuDrawer={menuDrawer} userLocation={userLocation} setIsVisible={setIsVisible} />
+      
     </View>
   );
 }
